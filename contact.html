@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Tagalong Hikers — plan, hike and explore Kenya. Discover upcoming hikes, trail guides, registration and outdoor adventures."
+    />
+    <meta name="theme-color" content="#070707" />
+    <title>Contact | Tagalong Hikers</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><img src="assets/logo.png" alt="Tagalong Hikers logo" /><span
+            >TAGALONG HIKERS</span
+          ></a
+        >
+        <nav class="nav-links">
+          <a href="index.html">Home</a><a href="hikes.html">Hikes</a
+          ><a href="about.html">About</a><a href="gallery.html">Gallery</a
+          ><a href="guides.html">Guides</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-btn" type="button">Light Mode</button
+          ><button class="menu-btn" type="button">Menu</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <div class="eyebrow">Contact Tagalong Hikers</div>
+          <h1>Let's talk trails.</h1>
+          <p>
+            Questions about an upcoming hike, group bookings, trail suggestions
+            or joining the community? Get in touch.
+          </p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container form-layout">
+          <form
+            class="card form-grid"
+            onsubmit="
+              event.preventDefault();
+              document.querySelector('#contact-success').classList.add('show');
+              this.reset();
+            "
+          >
+            <div class="field">
+              <label>Name</label><input required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label>Email</label
+              ><input type="email" required placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label>Phone</label><input placeholder="+254 ..." />
+            </div>
+            <div class="field">
+              <label>Subject</label
+              ><select>
+                <option>General enquiry</option>
+                <option>Upcoming hike</option>
+                <option>Group booking</option>
+                <option>Media</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Message</label
+              ><textarea
+                required
+                placeholder="Tell us what you would like to know"
+              ></textarea>
+            </div>
+            <div class="field full">
+              <button class="btn fill" type="submit">Send Message</button>
+            </div>
+          </form>
+          <div>
+            <div class="card">
+              <div class="eyebrow">Find us</div>
+              <h3>Nairobi, Kenya</h3>
+              <p>
+                WhatsApp:
+                <a class="text-link" href="https://wa.me/254700000000"
+                  >+254 700 000 000</a
+                >
+              </p>
+              <p>
+                Phone:
+                <a class="text-link" href="tel:+254700000000"
+                  >+254 700 000 000</a
+                >
+              </p>
+              <p>
+                Email:
+                <a class="text-link" href="mailto:hello@tagalonghikers.com"
+                  >hello@tagalonghikers.com</a
+                >
+              </p>
+              <p>Social: Instagram · Facebook · TikTok · YouTube</p>
+            </div>
+            <div class="confirmation" id="contact-success">
+              <strong>Message ready.</strong>
+              <p>
+                The front-end form is working. Connect it to your email or
+                backend before publishing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="map-wrap">
+            <div id="contact-map"></div>
+            <div class="map-note">Nairobi reference map</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">TAGALONG <em>HIKERS</em></div>
+            <p>Plan. Hike. Explore.</p>
+            <p>
+              Outdoor experiences, organised hikes and useful trail information
+              for people exploring Kenya.
+            </p>
+          </div>
+          <div>
+            <div class="footer-title">Explore</div>
+            <p><a href="hikes.html">Upcoming Hikes</a></p>
+            <p><a href="gallery.html">Adventure Gallery</a></p>
+            <p><a href="guides.html">Hiking Guides</a></p>
+            <p><a href="booking.html">Booking / Registration</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Contact</div>
+            <p>Nairobi, Kenya</p>
+            <p><a href="https://wa.me/254700000000">WhatsApp</a></p>
+            <p><a href="tel:+254700000000">+254 700 000 000</a></p>
+            <p>
+              <a href="mailto:hello@tagalonghikers.com"
+                >hello@tagalonghikers.com</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="copyright">
+          © <span id="year"></span> Tagalong Hikers. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script src="assets/script.js"></script>
+  </body>
+</html>

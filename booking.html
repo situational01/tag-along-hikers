@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Tagalong Hikers — plan, hike and explore Kenya. Discover upcoming hikes, trail guides, registration and outdoor adventures."
+    />
+    <meta name="theme-color" content="#070707" />
+    <title>Booking | Tagalong Hikers</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><img src="assets/logo.png" alt="Tagalong Hikers logo" /><span
+            >TAGALONG HIKERS</span
+          ></a
+        >
+        <nav class="nav-links">
+          <a href="index.html">Home</a><a href="hikes.html">Hikes</a
+          ><a href="about.html">About</a><a href="gallery.html">Gallery</a
+          ><a href="guides.html">Guides</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-btn" type="button">Light Mode</button
+          ><button class="menu-btn" type="button">Menu</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <div class="eyebrow">Booking & Registration</div>
+          <h1>Reserve your place.</h1>
+          <p>
+            Choose an upcoming hike and submit your registration details. The
+            confirmation shown here is a website registration reference, not a
+            payment receipt.
+          </p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container form-layout">
+          <form class="card form-grid" id="booking-form">
+            <div class="field full">
+              <label>Select Hike</label
+              ><select id="hike-select" name="hike" required></select>
+            </div>
+            <div class="field">
+              <label>Number of People</label
+              ><input
+                name="people"
+                type="number"
+                min="1"
+                max="20"
+                value="1"
+                required
+              />
+            </div>
+            <div class="field">
+              <label>Full Name</label
+              ><input name="name" required placeholder="Your full name" />
+            </div>
+            <div class="field">
+              <label>Phone</label
+              ><input name="phone" required placeholder="+254 ..." />
+            </div>
+            <div class="field">
+              <label>Email</label
+              ><input
+                name="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+              />
+            </div>
+            <div class="field">
+              <label>Emergency Contact Name</label
+              ><input name="emergency_name" required />
+            </div>
+            <div class="field">
+              <label>Emergency Contact Phone</label
+              ><input name="emergency_phone" required />
+            </div>
+            <div class="field full">
+              <label>Notes</label
+              ><textarea
+                name="notes"
+                placeholder="Anything the organiser should know?"
+              ></textarea>
+            </div>
+            <div class="field full">
+              <label>Payment</label>
+              <div class="notice">
+                Payment instructions can be connected here when the organiser's
+                official payment method is finalised. Do not enter card details
+                into this form.
+              </div>
+            </div>
+            <div class="field full">
+              <button class="btn fill" type="submit">
+                Submit Registration
+              </button>
+            </div>
+          </form>
+          <div>
+            <div class="card">
+              <div class="eyebrow">Registration process</div>
+              <h3>How it works</h3>
+              <div class="feature-list">
+                <div class="feature">
+                  <b>01</b>
+                  <div>
+                    <h3>Choose</h3>
+                    <p>Select the hike you want to join.</p>
+                  </div>
+                </div>
+                <div class="feature">
+                  <b>02</b>
+                  <div>
+                    <h3>Register</h3>
+                    <p>Provide your contact and emergency information.</p>
+                  </div>
+                </div>
+                <div class="feature">
+                  <b>03</b>
+                  <div>
+                    <h3>Confirm</h3>
+                    <p>
+                      Keep your registration reference and follow the
+                      organiser's payment instructions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="confirmation" id="confirmation"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">TAGALONG <em>HIKERS</em></div>
+            <p>Plan. Hike. Explore.</p>
+            <p>
+              Outdoor experiences, organised hikes and useful trail information
+              for people exploring Kenya.
+            </p>
+          </div>
+          <div>
+            <div class="footer-title">Explore</div>
+            <p><a href="hikes.html">Upcoming Hikes</a></p>
+            <p><a href="gallery.html">Adventure Gallery</a></p>
+            <p><a href="guides.html">Hiking Guides</a></p>
+            <p><a href="booking.html">Booking / Registration</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Contact</div>
+            <p>Nairobi, Kenya</p>
+            <p><a href="https://wa.me/254700000000">WhatsApp</a></p>
+            <p><a href="tel:+254700000000">+254 700 000 000</a></p>
+            <p>
+              <a href="mailto:hello@tagalonghikers.com"
+                >hello@tagalonghikers.com</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="copyright">
+          © <span id="year"></span> Tagalong Hikers. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script src="assets/script.js"></script>
+  </body>
+</html>

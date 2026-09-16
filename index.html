@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Tagalong Hikers — plan, hike and explore Kenya. Discover upcoming hikes, trail guides, registration and outdoor adventures."
+    />
+    <meta name="theme-color" content="#070707" />
+    <title>Home | Tagalong Hikers</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html"
+          ><img src="assets/logo.png" alt="Tagalong Hikers logo" /><span
+            >TAGALONG HIKERS</span
+          ></a
+        >
+        <nav class="nav-links">
+          <a href="index.html">Home</a><a href="hikes.html">Hikes</a
+          ><a href="about.html">About</a><a href="gallery.html">Gallery</a
+          ><a href="guides.html">Guides</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="theme-btn" type="button">Light Mode</button
+          ><button class="menu-btn" type="button">Menu</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero hero-full">
+        <div class="hero-scene">
+          <img
+            class="hero-background-image"
+            src="images/hero_section/kim subday 2025-7.jpg"
+            alt="Hiking trail landscape"
+            onerror="this.style.display = 'none'"
+          />
+          <div class="hero-image-placeholder">
+            <span>ADD YOUR HERO IMAGE</span
+            ><small>Replace assets/hero-image.jpg with your own photo</small>
+          </div>
+          <div class="scene-vignette"></div>
+          <div class="scene-caption">
+            <span>TAGALONG HIKERS · KENYA</span
+            ><strong>Find your trail.</strong>
+          </div>
+        </div>
+        <div class="container hero-content">
+          <div class="hero-copy-block">
+            <div class="eyebrow">Tagalong Hikers · Kenya</div>
+            <h1>Plan your next <em>adventure.</em></h1>
+            <p class="hero-copy">
+              Discover trails, join organised hikes and explore more of Kenya
+              with a community that enjoys being outdoors.
+            </p>
+            <div class="actions">
+              <a class="btn fill" href="hikes.html">Explore Hikes</a
+              ><a class="btn" href="about.html">About Tagalong</a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-scroll">SCROLL TO EXPLORE</div>
+      </section>
+
+      <section class="section" id="upcoming">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">The trail list</div>
+              <h2>Upcoming Hikes</h2>
+            </div>
+            <p>
+              See the date, location, distance, difficulty and price before you
+              choose your next adventure.
+            </p>
+          </div>
+          <div class="cards" id="featured-hikes"></div>
+          <div
+            class="actions"
+            style="justify-content: center; margin-top: 30px"
+          >
+            <a class="btn" href="hikes.html">View All Hikes</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="stats">
+            <div class="stat">
+              <strong>50+</strong><span>Hikes planned</span>
+            </div>
+            <div class="stat"><strong>1,200+</strong><span>Hikers</span></div>
+            <div class="stat">
+              <strong>30+</strong><span>Trails explored</span>
+            </div>
+            <div class="stat">
+              <strong>7</strong><span>Trail categories</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
+          <div>
+            <div class="eyebrow">Choose your trail</div>
+            <h2>From easy walks to bigger climbs.</h2>
+            <p>
+              Use the hike directory to search by trail name, filter by
+              difficulty or explore by type — mountains, forests, waterfalls and
+              scenic trails.
+            </p>
+            <div class="actions">
+              <a class="btn" href="hikes.html">Find a Hike</a>
+            </div>
+          </div>
+          <div class="feature-list">
+            <div class="feature">
+              <b>01</b>
+              <div>
+                <h3>Easy</h3>
+                <p>Relaxed walks for beginners and lighter days outdoors.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <b>02</b>
+              <div>
+                <h3>Moderate</h3>
+                <p>Steady trails for hikers looking for a little more.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <b>03</b>
+              <div>
+                <h3>Difficult</h3>
+                <p>Longer or steeper routes for experienced hikers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
+          <div>
+            <div class="eyebrow">Weather</div>
+            <h2>Check conditions before you go.</h2>
+            <p>
+              Current forecast information can help with planning, especially
+              for exposed or mountain routes. Always confirm conditions close to
+              departure.
+            </p>
+          </div>
+          <div>
+            <div class="weather" id="weather-cards">
+              <div class="empty">Loading forecast…</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">The community</div>
+              <h2>What hikers say</h2>
+            </div>
+            <p>Feedback from people who have joined the trail.</p>
+          </div>
+          <div class="testimonials">
+            <article class="card">
+              <div class="quote">
+                “A great way to discover places around Nairobi while meeting
+                people who enjoy hiking.”
+              </div>
+              <div class="reviewer">Previous Hiker</div>
+            </article>
+            <article class="card">
+              <div class="quote">
+                “The route information made it easy to know what to carry and
+                what to expect.”
+              </div>
+              <div class="reviewer">Previous Hiker</div>
+            </article>
+            <article class="card">
+              <div class="quote">
+                “Good company, beautiful scenery and a memorable day outside.”
+              </div>
+              <div class="reviewer">Previous Hiker</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <div class="eyebrow">Your next trail</div>
+          <h2>Get outside and explore.</h2>
+          <p>
+            Browse the upcoming hikes and choose an experience that fits your
+            pace.
+          </p>
+          <div class="actions" style="justify-content: center">
+            <a class="btn fill" href="hikes.html">Explore Hikes</a
+            ><a class="btn" href="booking.html">Register</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="modal" id="hike-modal">
+      <div class="modal-box">
+        <button class="close" id="close-modal">Close</button>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">TAGALONG <em>HIKERS</em></div>
+            <p>Plan. Hike. Explore.</p>
+            <p>
+              Outdoor experiences, organised hikes and useful trail information
+              for people exploring Kenya.
+            </p>
+          </div>
+          <div>
+            <div class="footer-title">Explore</div>
+            <p><a href="hikes.html">Upcoming Hikes</a></p>
+            <p><a href="gallery.html">Adventure Gallery</a></p>
+            <p><a href="guides.html">Hiking Guides</a></p>
+            <p><a href="booking.html">Booking / Registration</a></p>
+          </div>
+          <div>
+            <div class="footer-title">Contact</div>
+            <p>Nairobi, Kenya</p>
+            <p><a href="https://wa.me/254700000000">WhatsApp</a></p>
+            <p><a href="tel:+254700000000">+254 700 000 000</a></p>
+            <p>
+              <a href="mailto:hello@tagalonghikers.com"
+                >hello@tagalonghikers.com</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="copyright">
+          © <span id="year"></span> Tagalong Hikers. All rights reserved.
+        </div>
+      </div>
+    </footer>
+    <script src="assets/script.js"></script>
+  </body>
+</html>

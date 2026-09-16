@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Tagalong Hikers — plan, hike and explore Kenya. Discover upcoming hikes, trail guides, registration and outdoor adventures.">
+<meta name="theme-color" content="#070707">
+<title>Hike Details | Tagalong Hikers</title>
+<link rel="stylesheet" href="assets/styles.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head>
+<body>
+<header class="site-header"><div class="container nav">
+<a class="brand" href="index.html"><img src="assets/logo.png" alt="Tagalong Hikers logo"><span>TAGALONG HIKERS</span></a>
+<nav class="nav-links">
+<a href="index.html">Home</a><a href="hikes.html">Hikes</a><a href="about.html">About</a><a href="gallery.html">Gallery</a><a href="guides.html">Guides</a><a href="contact.html">Contact</a>
+</nav>
+<div class="nav-actions"><button class="theme-btn" type="button">Light Mode</button><button class="menu-btn" type="button">Menu</button></div>
+</div></header>
+
+<main>
+<section class="page-hero"><div class="container"><div class="eyebrow">Hike Details</div><h1 id="detail-title">Trail</h1><p>Route information, preparation, elevation and meeting details.</p></div></section>
+<section class="section"><div class="container" id="hike-detail"></div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Route map</div><h2>Trail & Meeting Point</h2></div><p>Use the map for route context. Confirm the final meeting point with the organiser before the hike.</p></div><div class="map-wrap"><div id="detail-map"></div><div class="map-note">Interactive route overview</div></div></div></section>
+<section class="section"><div class="container"><div class="section-head"><div><div class="eyebrow">Next Adventure</div><h2>Keep exploring.</h2></div><p>Browse the full hike directory for another trail.</p></div><a class="btn" href="hikes.html">Explore More Hikes</a></div></section>
+</main>
+
+<footer><div class="container"><div class="footer-grid">
+<div><div class="footer-brand">TAGALONG <em>HIKERS</em></div><p>Plan. Hike. Explore.</p><p>Outdoor experiences, organised hikes and useful trail information for people exploring Kenya.</p></div>
+<div><div class="footer-title">Explore</div><p><a href="hikes.html">Upcoming Hikes</a></p><p><a href="gallery.html">Adventure Gallery</a></p><p><a href="guides.html">Hiking Guides</a></p><p><a href="booking.html">Booking / Registration</a></p></div>
+<div><div class="footer-title">Contact</div><p>Nairobi, Kenya</p><p><a href="https://wa.me/254700000000">WhatsApp</a></p><p><a href="tel:+254700000000">+254 700 000 000</a></p><p><a href="mailto:hello@tagalonghikers.com">hello@tagalonghikers.com</a></p></div>
+</div><div class="copyright">© <span id="year"></span> Tagalong Hikers. All rights reserved.</div></div></footer>
+<script src="assets/script.js"></script>
+</body></html>
