@@ -4,11 +4,13 @@ const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 /* ---------- SITE CONFIG: edit contact + social details here ---------- */
 const SITE = {
   whatsapp: "254700000000", // international format, no + or spaces
-  whatsappMessage: "Hi Tagalong Hikers! I'd like to know more about your hikes.",
+  whatsappMessage:
+    "Hi Tagalong Hikers! I'd like to know more about your hikes.",
   social: {
-    facebook: "https://www.facebook.com/tagalonghikers",
-    instagram: "https://www.instagram.com/tagalonghikers",
-    tiktok: "https://www.tiktok.com/@tagalonghikers",
+    facebook: "https://www.facebook.com/share/1KYR4RLxPp/",
+    instagram: "https://www.instagram.com/tagalonghikers/",
+    tiktok:
+      "https://www.tiktok.com/@tagalonghikers?is_from_webapp=1&sender_device=pc",
   },
 };
 
@@ -49,7 +51,8 @@ const menuBtn = $(".menu-btn"),
   nav = $(".nav-links");
 if (menuBtn && nav) {
   if (!nav.id) nav.id = "site-nav";
-  menuBtn.innerHTML = '<span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+  menuBtn.innerHTML =
+    '<span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>';
   menuBtn.setAttribute("aria-controls", nav.id);
   const setMenu = (open) => {
     nav.classList.toggle("open", open);
@@ -57,13 +60,22 @@ if (menuBtn && nav) {
     menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   };
   setMenu(false);
-  menuBtn.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
-  $$(".nav-links a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
-  document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+  menuBtn.addEventListener("click", () =>
+    setMenu(!nav.classList.contains("open")),
+  );
+  $$(".nav-links a").forEach((a) =>
+    a.addEventListener("click", () => setMenu(false)),
+  );
+  document.addEventListener(
+    "keydown",
+    (e) => e.key === "Escape" && setMenu(false),
+  );
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".site-header")) setMenu(false);
   });
-  window.matchMedia("(min-width: 901px)").addEventListener("change", () => setMenu(false));
+  window
+    .matchMedia("(min-width: 901px)")
+    .addEventListener("change", () => setMenu(false));
 }
 
 const year = $("#year");
@@ -376,12 +388,31 @@ function setupBooking() {
 /* ---------- Weather: Open-Meteo first, MET Norway as backup, saved copy as last resort ---------- */
 const WEATHER_CACHE_KEY = "tagalong-weather";
 const WMO_TEXT = {
-  0: "Clear", 1: "Mainly clear", 2: "Partly cloudy", 3: "Cloudy", 45: "Foggy", 48: "Foggy",
-  51: "Light drizzle", 53: "Drizzle", 55: "Drizzle", 56: "Freezing drizzle", 57: "Freezing drizzle",
-  61: "Light rain", 63: "Rain", 65: "Heavy rain", 66: "Freezing rain", 67: "Freezing rain",
-  80: "Showers", 81: "Showers", 82: "Heavy showers", 95: "Thunderstorm", 96: "Thunderstorm", 99: "Thunderstorm",
+  0: "Clear",
+  1: "Mainly clear",
+  2: "Partly cloudy",
+  3: "Cloudy",
+  45: "Foggy",
+  48: "Foggy",
+  51: "Light drizzle",
+  53: "Drizzle",
+  55: "Drizzle",
+  56: "Freezing drizzle",
+  57: "Freezing drizzle",
+  61: "Light rain",
+  63: "Rain",
+  65: "Heavy rain",
+  66: "Freezing rain",
+  67: "Freezing rain",
+  80: "Showers",
+  81: "Showers",
+  82: "Heavy showers",
+  95: "Thunderstorm",
+  96: "Thunderstorm",
+  99: "Thunderstorm",
 };
-const nairobiToday = () => new Date(Date.now() + 3 * 3600 * 1000).toISOString().slice(0, 10); // UTC+3 all year
+const nairobiToday = () =>
+  new Date(Date.now() + 3 * 3600 * 1000).toISOString().slice(0, 10); // UTC+3 all year
 
 async function fetchJSON(url, ms = 9000) {
   const ctrl = new AbortController();
@@ -399,7 +430,8 @@ async function weatherFromOpenMeteo() {
   const d = await fetchJSON(
     "https://api.open-meteo.com/v1/forecast?latitude=-1.2921&longitude=36.8219&daily=weather_code,temperature_2m_max,precipitation_probability_max&timezone=Africa%2FNairobi&forecast_days=4",
   );
-  if (!d?.daily?.time?.length) throw new Error(d?.reason || "Unexpected response");
+  if (!d?.daily?.time?.length)
+    throw new Error(d?.reason || "Unexpected response");
   return d.daily.time.map((date, i) => ({
     date,
     temp: Math.round(d.daily.temperature_2m_max[i]),
@@ -416,18 +448,34 @@ function metSymbolText(code = "") {
   if (c.includes("showers")) return "Showers";
   if (c.includes("rain")) return "Rain";
   if (c.includes("drizzle")) return "Drizzle";
-  return { clearsky: "Clear", fair: "Mainly clear", partlycloudy: "Partly cloudy", cloudy: "Cloudy", fog: "Foggy" }[c] || "Variable";
+  return (
+    {
+      clearsky: "Clear",
+      fair: "Mainly clear",
+      partlycloudy: "Partly cloudy",
+      cloudy: "Cloudy",
+      fog: "Foggy",
+    }[c] || "Variable"
+  );
 }
 
 async function weatherFromMet() {
-  const d = await fetchJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-1.2921&lon=36.8219");
+  const d = await fetchJSON(
+    "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-1.2921&lon=36.8219",
+  );
   const series = d?.properties?.timeseries;
   if (!series?.length) throw new Error("Unexpected response");
   const days = new Map();
   series.forEach((pt) => {
     const local = new Date(new Date(pt.time).getTime() + 3 * 3600 * 1000);
     const key = local.toISOString().slice(0, 10);
-    const day = days.get(key) || { date: key, temps: [], mm: 0, symbol: "", dist: 99 };
+    const day = days.get(key) || {
+      date: key,
+      temps: [],
+      mm: 0,
+      symbol: "",
+      dist: 99,
+    };
     const t = pt.data?.instant?.details?.air_temperature;
     if (typeof t === "number") day.temps.push(t);
     const n1 = pt.data?.next_1_hours,
@@ -478,7 +526,10 @@ async function loadWeather() {
       try {
         const days = await fn();
         try {
-          localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ ts: Date.now(), name, days }));
+          localStorage.setItem(
+            WEATHER_CACHE_KEY,
+            JSON.stringify({ ts: Date.now(), name, days }),
+          );
         } catch {}
         renderWeather(wrap, days, `Forecast for Nairobi · data from ${name}`);
         return;
@@ -493,7 +544,11 @@ async function loadWeather() {
     const upcoming = saved?.days?.filter((x) => x.date >= nairobiToday()) || [];
     if (upcoming.length && Date.now() - saved.ts < 24 * 3600 * 1000) {
       const hrs = Math.max(1, Math.round((Date.now() - saved.ts) / 3600000));
-      renderWeather(wrap, upcoming, `Live forecast is unavailable, so this is your last saved forecast (${hrs}h old). Check again before your hike.`);
+      renderWeather(
+        wrap,
+        upcoming,
+        `Live forecast is unavailable, so this is your last saved forecast (${hrs}h old). Check again before your hike.`,
+      );
       return;
     }
   } catch {}
@@ -523,50 +578,156 @@ $$("[data-scroll]").forEach((b) =>
    - Our own hikes are read from hikeData above, so they always match
    =================================================================== */
 const NAIROBI = [-1.2921, 36.8219];
-const KENYA_BOUNDS = [[-4.8, 33.9], [5.1, 42.0]];
+const KENYA_BOUNDS = [
+  [-4.8, 33.9],
+  [5.1, 42.0],
+];
 const OUR_HIKE_IDS = ["ngong-hills", "karura", "longonot", "waterfall"];
 
 /* Coordinates and facts are approximate: check before publishing. */
 const OTHER_SPOTS = [
-  { id: "mt-kenya", name: "Mt. Kenya", region: "Central Kenya", lat: -0.1521, lng: 37.3084, level: "difficult",
-    elev: "4,985 m (Point Lenana)", time: "3–5 days", season: "Jan–Mar, Aug–Sep",
-    note: "Kenya's highest mountain and a UNESCO World Heritage Site. Point Lenana is the trekking summit; allow time to acclimatise." },
-  { id: "mt-elgon", name: "Mt. Elgon", region: "Western Kenya", lat: 1.1333, lng: 34.55, level: "moderate",
-    elev: "4,187 m (Koitobos)", time: "2–3 days", season: "Dec–Mar, Jun–Sep",
-    note: "A huge extinct volcano on the Uganda border with caves, hot springs and gentler slopes than Mt. Kenya." },
-  { id: "aberdares", name: "Aberdare Ranges", region: "Nyandarua / Nyeri", lat: -0.4, lng: 36.7, level: "difficult",
-    elev: "3,999 m (Ol Donyo Lesatima)", time: "1–2 days", season: "Jan–Mar, Jul–Oct",
-    note: "Moorland, waterfalls and bamboo forest. It is cold and often wet, so pack warm layers." },
-  { id: "suswa", name: "Mt. Suswa", region: "Narok / Kajiado", lat: -1.1833, lng: 36.35, level: "moderate",
-    elev: "2,356 m", time: "5–7 hours", season: "Jun–Oct, Jan–Feb",
-    note: "A double-crater volcano with a ring trail and lava caves. Go with a guide." },
-  { id: "hells-gate", name: "Hell's Gate", region: "Naivasha", lat: -0.9, lng: 36.3167, level: "easy",
-    elev: "≈1,900 m", time: "3–5 hours", season: "Jun–Oct, Jan–Feb",
-    note: "Walk through red-walled gorges past hot springs, with zebra, giraffe and buffalo nearby." },
-  { id: "menengai", name: "Menengai Crater", region: "Nakuru", lat: -0.2, lng: 36.0667, level: "easy",
-    elev: "2,278 m (rim)", time: "3–4 hours", season: "Jun–Oct, Dec–Feb",
-    note: "A rim walk around one of the largest volcanic calderas in the world, with views across Nakuru." },
-  { id: "ol-donyo-sabuk", name: "Ol Donyo Sabuk", region: "Machakos / Kiambu", lat: -1.13, lng: 37.24, level: "easy",
-    elev: "2,146 m", time: "3–4 hours", season: "Jun–Oct, Jan–Feb",
-    note: "A forested mountain near Thika with cool, quiet trails and a summit view toward Mt. Kenya." },
-  { id: "chyulu", name: "Chyulu Hills", region: "Makueni / Kajiado", lat: -2.6667, lng: 37.85, level: "moderate",
-    elev: "≈2,188 m", time: "1 day", season: "Jun–Oct, Jan–Feb",
-    note: "Green volcanic hills with lava tubes and views of Kilimanjaro on clear mornings." },
-  { id: "cherangani", name: "Cherangani Hills", region: "Elgeyo-Marakwet / West Pokot", lat: 1.25, lng: 35.4167, level: "moderate",
-    elev: "3,581 m (Kamelogon)", time: "1–3 days", season: "Dec–Mar",
-    note: "Highland forest and moorland in the west. Paths are remote, so hire a local guide." },
-  { id: "kakamega", name: "Kakamega Forest", region: "Western Kenya", lat: 0.2833, lng: 34.85, level: "easy",
-    elev: "≈1,600 m", time: "2–4 hours", season: "Dec–Feb, Jun–Sep",
-    note: "Kenya's last patch of tropical rainforest, home to monkeys and hundreds of bird species. Early mornings are best." },
-  { id: "shimba", name: "Shimba Hills", region: "Kwale (Coast)", lat: -4.2167, lng: 39.4167, level: "easy",
-    elev: "≈450 m", time: "2–3 hours", season: "Jan–Mar, Jun–Oct",
-    note: "A coastal forest reserve with sable antelope and waterfalls, a cooler escape from the heat of Mombasa." },
+  {
+    id: "mt-kenya",
+    name: "Mt. Kenya",
+    region: "Central Kenya",
+    lat: -0.1521,
+    lng: 37.3084,
+    level: "difficult",
+    elev: "4,985 m (Point Lenana)",
+    time: "3–5 days",
+    season: "Jan–Mar, Aug–Sep",
+    note: "Kenya's highest mountain and a UNESCO World Heritage Site. Point Lenana is the trekking summit; allow time to acclimatise.",
+  },
+  {
+    id: "mt-elgon",
+    name: "Mt. Elgon",
+    region: "Western Kenya",
+    lat: 1.1333,
+    lng: 34.55,
+    level: "moderate",
+    elev: "4,187 m (Koitobos)",
+    time: "2–3 days",
+    season: "Dec–Mar, Jun–Sep",
+    note: "A huge extinct volcano on the Uganda border with caves, hot springs and gentler slopes than Mt. Kenya.",
+  },
+  {
+    id: "aberdares",
+    name: "Aberdare Ranges",
+    region: "Nyandarua / Nyeri",
+    lat: -0.4,
+    lng: 36.7,
+    level: "difficult",
+    elev: "3,999 m (Ol Donyo Lesatima)",
+    time: "1–2 days",
+    season: "Jan–Mar, Jul–Oct",
+    note: "Moorland, waterfalls and bamboo forest. It is cold and often wet, so pack warm layers.",
+  },
+  {
+    id: "suswa",
+    name: "Mt. Suswa",
+    region: "Narok / Kajiado",
+    lat: -1.1833,
+    lng: 36.35,
+    level: "moderate",
+    elev: "2,356 m",
+    time: "5–7 hours",
+    season: "Jun–Oct, Jan–Feb",
+    note: "A double-crater volcano with a ring trail and lava caves. Go with a guide.",
+  },
+  {
+    id: "hells-gate",
+    name: "Hell's Gate",
+    region: "Naivasha",
+    lat: -0.9,
+    lng: 36.3167,
+    level: "easy",
+    elev: "≈1,900 m",
+    time: "3–5 hours",
+    season: "Jun–Oct, Jan–Feb",
+    note: "Walk through red-walled gorges past hot springs, with zebra, giraffe and buffalo nearby.",
+  },
+  {
+    id: "menengai",
+    name: "Menengai Crater",
+    region: "Nakuru",
+    lat: -0.2,
+    lng: 36.0667,
+    level: "easy",
+    elev: "2,278 m (rim)",
+    time: "3–4 hours",
+    season: "Jun–Oct, Dec–Feb",
+    note: "A rim walk around one of the largest volcanic calderas in the world, with views across Nakuru.",
+  },
+  {
+    id: "ol-donyo-sabuk",
+    name: "Ol Donyo Sabuk",
+    region: "Machakos / Kiambu",
+    lat: -1.13,
+    lng: 37.24,
+    level: "easy",
+    elev: "2,146 m",
+    time: "3–4 hours",
+    season: "Jun–Oct, Jan–Feb",
+    note: "A forested mountain near Thika with cool, quiet trails and a summit view toward Mt. Kenya.",
+  },
+  {
+    id: "chyulu",
+    name: "Chyulu Hills",
+    region: "Makueni / Kajiado",
+    lat: -2.6667,
+    lng: 37.85,
+    level: "moderate",
+    elev: "≈2,188 m",
+    time: "1 day",
+    season: "Jun–Oct, Jan–Feb",
+    note: "Green volcanic hills with lava tubes and views of Kilimanjaro on clear mornings.",
+  },
+  {
+    id: "cherangani",
+    name: "Cherangani Hills",
+    region: "Elgeyo-Marakwet / West Pokot",
+    lat: 1.25,
+    lng: 35.4167,
+    level: "moderate",
+    elev: "3,581 m (Kamelogon)",
+    time: "1–3 days",
+    season: "Dec–Mar",
+    note: "Highland forest and moorland in the west. Paths are remote, so hire a local guide.",
+  },
+  {
+    id: "kakamega",
+    name: "Kakamega Forest",
+    region: "Western Kenya",
+    lat: 0.2833,
+    lng: 34.85,
+    level: "easy",
+    elev: "≈1,600 m",
+    time: "2–4 hours",
+    season: "Dec–Feb, Jun–Sep",
+    note: "Kenya's last patch of tropical rainforest, home to monkeys and hundreds of bird species. Early mornings are best.",
+  },
+  {
+    id: "shimba",
+    name: "Shimba Hills",
+    region: "Kwale (Coast)",
+    lat: -4.2167,
+    lng: 39.4167,
+    level: "easy",
+    elev: "≈450 m",
+    time: "2–3 hours",
+    season: "Jan–Mar, Jun–Oct",
+    note: "A coastal forest reserve with sable antelope and waterfalls, a cooler escape from the heat of Mombasa.",
+  },
 ];
 
 function kmFromNairobi(lat, lng) {
-  const R = 6371, rad = Math.PI / 180;
-  const dLat = (lat - NAIROBI[0]) * rad, dLng = (lng - NAIROBI[1]) * rad;
-  const a = Math.sin(dLat / 2) ** 2 + Math.cos(NAIROBI[0] * rad) * Math.cos(lat * rad) * Math.sin(dLng / 2) ** 2;
+  const R = 6371,
+    rad = Math.PI / 180;
+  const dLat = (lat - NAIROBI[0]) * rad,
+    dLng = (lng - NAIROBI[1]) * rad;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(NAIROBI[0] * rad) * Math.cos(lat * rad) * Math.sin(dLng / 2) ** 2;
   return Math.max(10, Math.round((2 * R * Math.asin(Math.sqrt(a))) / 10) * 10);
 }
 const capWord = (s) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -577,23 +738,47 @@ function initKenyaMap(el) {
     ...OUR_HIKE_IDS.map((id) => hikeData.find((h) => h.id === id))
       .filter(Boolean)
       .map((h) => ({
-        id: h.id, name: h.name, region: h.location, lat: h.route[0][0], lng: h.route[0][1],
-        level: h.difficulty.toLowerCase(), note: h.description, ours: true,
-        facts: [["Distance", h.distance], ["Elevation gain", h.elevation], ["Next hike", h.date], ["Price", h.price]],
+        id: h.id,
+        name: h.name,
+        region: h.location,
+        lat: h.route[0][0],
+        lng: h.route[0][1],
+        level: h.difficulty.toLowerCase(),
+        note: h.description,
+        ours: true,
+        facts: [
+          ["Distance", h.distance],
+          ["Elevation gain", h.elevation],
+          ["Next hike", h.date],
+          ["Price", h.price],
+        ],
       })),
     ...OTHER_SPOTS.map((s) => ({
-      ...s, ours: false,
-      facts: [["Elevation", s.elev], ["Typical time", s.time], ["Best months", s.season]],
+      ...s,
+      ours: false,
+      facts: [
+        ["Elevation", s.elev],
+        ["Typical time", s.time],
+        ["Best months", s.season],
+      ],
     })),
   ].map((s) => ({ ...s, km: kmFromNairobi(s.lat, s.lng) }));
 
   el.classList.add("kenya-map");
   const wrap = el.closest(".kenya-wrap") || el.parentElement;
-  const list = $("#spot-list"), filters = $("#map-filters");
+  const list = $("#spot-list"),
+    filters = $("#map-filters");
 
   const map = L.map(el, {
-    zoomControl: false, minZoom: 5, maxZoom: 15, zoomSnap: 0.25,
-    maxBounds: [[-7, 31], [7.5, 44.5]], maxBoundsViscosity: 0.85,
+    zoomControl: false,
+    minZoom: 5,
+    maxZoom: 15,
+    zoomSnap: 0.25,
+    maxBounds: [
+      [-7, 31],
+      [7.5, 44.5],
+    ],
+    maxBoundsViscosity: 0.85,
     dragging: !L.Browser.mobile,
   }).fitBounds(KENYA_BOUNDS, { padding: [10, 10] });
   L.control.zoom({ position: "topleft" }).addTo(map);
@@ -605,20 +790,29 @@ function initKenyaMap(el) {
 
   /* ---- tiles: theme-aware, plus a terrain option ---- */
   const carto = (style) =>
-    L.tileLayer(`https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`, {
-      subdomains: "abcd", maxZoom: 19, attribution: "© OpenStreetMap contributors © CARTO",
-    });
+    L.tileLayer(
+      `https://{s}.basemaps.cartocdn.com/${style}/{z}/{x}/{y}{r}.png`,
+      {
+        subdomains: "abcd",
+        maxZoom: 19,
+        attribution: "© OpenStreetMap contributors © CARTO",
+      },
+    );
   const layers = {
     dark: carto("dark_all"),
     light: carto("rastertiles/voyager"),
     topo: L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
-      maxZoom: 17, attribution: "Map data © OpenStreetMap contributors, SRTM | Style © OpenTopoMap (CC-BY-SA)",
+      maxZoom: 17,
+      attribution:
+        "Map data © OpenStreetMap contributors, SRTM | Style © OpenTopoMap (CC-BY-SA)",
     }),
   };
-  let base = null, mode = "map";
+  let base = null,
+    mode = "map";
   function applyBase() {
     const light = document.documentElement.dataset.theme === "light";
-    const next = mode === "terrain" ? layers.topo : light ? layers.light : layers.dark;
+    const next =
+      mode === "terrain" ? layers.topo : light ? layers.light : layers.dark;
     if (base === next) return;
     next.addTo(map);
     if (base) map.removeLayer(base);
@@ -626,19 +820,25 @@ function initKenyaMap(el) {
     el.classList.toggle("is-terrain", mode === "terrain");
   }
   applyBase();
-  new MutationObserver(applyBase).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  new MutationObserver(applyBase).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
 
   /* ---- controls: Map / Terrain toggle and legend ---- */
   const toggle = L.control({ position: "topright" });
   toggle.onAdd = () => {
     const d = L.DomUtil.create("div", "map-panel map-toggle");
-    d.innerHTML = '<button type="button" data-mode="map" class="active">Map</button><button type="button" data-mode="terrain">Terrain</button>';
+    d.innerHTML =
+      '<button type="button" data-mode="map" class="active">Map</button><button type="button" data-mode="terrain">Terrain</button>';
     L.DomEvent.disableClickPropagation(d);
     d.addEventListener("click", (e) => {
       const b = e.target.closest("button");
       if (!b) return;
       mode = b.dataset.mode;
-      d.querySelectorAll("button").forEach((x) => x.classList.toggle("active", x === b));
+      d.querySelectorAll("button").forEach((x) =>
+        x.classList.toggle("active", x === b),
+      );
       applyBase();
     });
     return d;
@@ -657,8 +857,20 @@ function initKenyaMap(el) {
   legend.addTo(map);
 
   /* Nairobi: our base */
-  L.circleMarker(NAIROBI, { radius: 6, color: "#f1d995", weight: 2, fillColor: "#e6c068", fillOpacity: 1, interactive: false })
-    .bindTooltip("Nairobi · our base", { permanent: true, direction: "right", offset: [8, 0], className: "city-label" })
+  L.circleMarker(NAIROBI, {
+    radius: 6,
+    color: "#f1d995",
+    weight: 2,
+    fillColor: "#e6c068",
+    fillOpacity: 1,
+    interactive: false,
+  })
+    .bindTooltip("Nairobi · our base", {
+      permanent: true,
+      direction: "right",
+      offset: [8, 0],
+      className: "city-label",
+    })
     .addTo(map);
 
   /* ---- pins and popups ---- */
@@ -667,11 +879,15 @@ function initKenyaMap(el) {
       className: "pin-wrap",
       html: `<span class="pin lv-${s.level}${s.ours ? " pin-ours" : ""}" style="--i:${i}">${s.ours ? '<i class="pin-pulse"></i>' : ""}
         <svg viewBox="0 0 38 46" aria-hidden="true"><path class="pin-body" d="M19 45S3 29 3 18a16 16 0 0 1 32 0c0 11-16 27-16 27z"/><path class="pin-peak" d="M10.5 23 17 12l4.2 6.4L24 15l4.5 8z"/></svg></span>`,
-      iconSize: [38, 46], iconAnchor: [19, 44], popupAnchor: [0, -38],
+      iconSize: [38, 46],
+      iconAnchor: [19, 44],
+      popupAnchor: [0, -38],
     });
 
   function popupHtml(s) {
-    const facts = s.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+    const facts = s.facts
+      .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
+      .join("");
     const actions = s.ours
       ? `<a class="btn fill" href="booking.html?hike=${encodeURIComponent(s.id)}">Book / Register</a><a class="btn" href="hike.html?id=${encodeURIComponent(s.id)}">Full details</a>`
       : `<a class="btn fill" target="_blank" rel="noopener" href="https://wa.me/254700000000?text=${encodeURIComponent("Hi Tagalong Hikers, I would like to hike " + s.name + ". Can you help?")}">Ask about this trail</a>`;
@@ -681,14 +897,22 @@ function initKenyaMap(el) {
   }
 
   const layer = L.layerGroup().addTo(map);
-  let filter = "all", active = null;
-  const matches = (s) => filter === "all" || (filter === "ours" ? s.ours : s.level === filter);
+  let filter = "all",
+    active = null;
+  const matches = (s) =>
+    filter === "all" || (filter === "ours" ? s.ours : s.level === filter);
 
   function select(s) {
     active = s;
-    list?.querySelectorAll(".spot").forEach((b) => b.classList.toggle("active", b.dataset.id === s.id));
+    list
+      ?.querySelectorAll(".spot")
+      .forEach((b) => b.classList.toggle("active", b.dataset.id === s.id));
     const btn = list?.querySelector(`.spot[data-id="${s.id}"]`);
-    if (btn) list.scrollTo({ top: btn.offsetTop - (list.clientHeight - btn.offsetHeight) / 2, behavior: reduce ? "auto" : "smooth" });
+    if (btn)
+      list.scrollTo({
+        top: btn.offsetTop - (list.clientHeight - btn.offsetHeight) / 2,
+        behavior: reduce ? "auto" : "smooth",
+      });
     el.querySelectorAll(".pin").forEach((p) => p.classList.remove("active"));
     s.marker?.getElement()?.querySelector(".pin")?.classList.add("active");
   }
@@ -698,33 +922,67 @@ function initKenyaMap(el) {
     map.closePopup();
     const visible = spots.filter(matches);
     visible.forEach((s, i) => {
-      s.marker = L.marker([s.lat, s.lng], { icon: pinIcon(s, i), title: s.name, riseOnHover: true })
-        .bindPopup(popupHtml(s), { maxWidth: 310, className: "kenya-popup", autoPanPadding: [30, 30] })
+      s.marker = L.marker([s.lat, s.lng], {
+        icon: pinIcon(s, i),
+        title: s.name,
+        riseOnHover: true,
+      })
+        .bindPopup(popupHtml(s), {
+          maxWidth: 310,
+          className: "kenya-popup",
+          autoPanPadding: [30, 30],
+        })
         .on("popupopen", () => select(s));
       s.marker.addTo(layer);
     });
     if (list) {
-      list.innerHTML = visible.map((s, i) =>
-        `<li style="--i:${i}"><button type="button" class="spot" data-id="${s.id}"><span class="spot-dot lv-${s.level}"></span>
+      list.innerHTML = visible
+        .map(
+          (s, i) =>
+            `<li style="--i:${i}"><button type="button" class="spot" data-id="${s.id}"><span class="spot-dot lv-${s.level}"></span>
           <span class="spot-body"><strong>${s.ours ? '<i class="star" aria-label="Tagalong hike">★</i> ' : ""}${s.name}</strong><small>${s.region} · ≈${s.km} km</small></span>
-          <span class="spot-lv lv-${s.level}">${capWord(s.level)}</span></button></li>`).join("");
+          <span class="spot-lv lv-${s.level}">${capWord(s.level)}</span></button></li>`,
+        )
+        .join("");
     }
     if (fit) {
-      const opts = { padding: [40, 40], maxZoom: 8, animate: !reduce, duration: 0.9 };
-      if (filter === "all" || !visible.length) map.flyToBounds(KENYA_BOUNDS, { ...opts, padding: [10, 10] });
-      else map.flyToBounds(L.latLngBounds(visible.map((s) => [s.lat, s.lng])), opts);
+      const opts = {
+        padding: [40, 40],
+        maxZoom: 8,
+        animate: !reduce,
+        duration: 0.9,
+      };
+      if (filter === "all" || !visible.length)
+        map.flyToBounds(KENYA_BOUNDS, { ...opts, padding: [10, 10] });
+      else
+        map.flyToBounds(
+          L.latLngBounds(visible.map((s) => [s.lat, s.lng])),
+          opts,
+        );
     }
   }
 
   if (filters) {
-    const defs = [["all", "All places"], ["ours", "Our hikes"], ["easy", "Easy"], ["moderate", "Moderate"], ["difficult", "Difficult"]];
-    filters.innerHTML = defs.map(([k, label]) =>
-      `<button type="button" class="category-btn${k === "all" ? " active" : ""}" data-f="${k}">${label} <span>${spots.filter((s) => k === "all" || (k === "ours" ? s.ours : s.level === k)).length}</span></button>`).join("");
+    const defs = [
+      ["all", "All places"],
+      ["ours", "Our hikes"],
+      ["easy", "Easy"],
+      ["moderate", "Moderate"],
+      ["difficult", "Difficult"],
+    ];
+    filters.innerHTML = defs
+      .map(
+        ([k, label]) =>
+          `<button type="button" class="category-btn${k === "all" ? " active" : ""}" data-f="${k}">${label} <span>${spots.filter((s) => k === "all" || (k === "ours" ? s.ours : s.level === k)).length}</span></button>`,
+      )
+      .join("");
     filters.addEventListener("click", (e) => {
       const b = e.target.closest("[data-f]");
       if (!b) return;
       filter = b.dataset.f;
-      filters.querySelectorAll(".category-btn").forEach((x) => x.classList.toggle("active", x === b));
+      filters
+        .querySelectorAll(".category-btn")
+        .forEach((x) => x.classList.toggle("active", x === b));
       render(true);
     });
   }
@@ -734,10 +992,22 @@ function initKenyaMap(el) {
     const s = b && spots.find((x) => x.id === b.dataset.id);
     if (!s) return;
     select(s);
-    if (window.innerWidth < 900) wrap.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-    map.flyTo([s.lat, s.lng], Math.max(map.getZoom(), 8), { duration: 1.1, animate: !reduce });
+    if (window.innerWidth < 900)
+      wrap.scrollIntoView({
+        behavior: reduce ? "auto" : "smooth",
+        block: "start",
+      });
+    map.flyTo([s.lat, s.lng], Math.max(map.getZoom(), 8), {
+      duration: 1.1,
+      animate: !reduce,
+    });
     let opened = false;
-    const open = () => { if (!opened) { opened = true; s.marker?.openPopup(); } };
+    const open = () => {
+      if (!opened) {
+        opened = true;
+        s.marker?.openPopup();
+      }
+    };
     map.once("moveend", open);
     setTimeout(open, 1500);
   });
@@ -745,11 +1015,19 @@ function initKenyaMap(el) {
   render(false);
 
   /* keep tiles correct when the layout changes; drop the pins in when the map scrolls into view */
-  if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => map.invalidateSize()).observe(el);
+  if (typeof ResizeObserver !== "undefined")
+    new ResizeObserver(() => map.invalidateSize()).observe(el);
   if (typeof IntersectionObserver !== "undefined") {
-    const io = new IntersectionObserver(([en]) => {
-      if (en.isIntersecting) { wrap.classList.add("live"); map.invalidateSize(); io.disconnect(); }
-    }, { threshold: 0.25 });
+    const io = new IntersectionObserver(
+      ([en]) => {
+        if (en.isIntersecting) {
+          wrap.classList.add("live");
+          map.invalidateSize();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
     io.observe(wrap);
   } else wrap.classList.add("live");
 }
@@ -1051,7 +1329,9 @@ function initHikerScene() {
   scene.add(marker);
 
   /* ---- Atmosphere: sun glow, drifting mist, fireflies ---- */
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const glowTex = (inner, outer) => {
     const c = document.createElement("canvas");
     c.width = c.height = 128;
@@ -1153,7 +1433,8 @@ function initHikerScene() {
     camera.updateProjectionMatrix();
   }
   window.addEventListener("resize", resize);
-  if (typeof ResizeObserver !== "undefined") new ResizeObserver(resize).observe(canvas);
+  if (typeof ResizeObserver !== "undefined")
+    new ResizeObserver(resize).observe(canvas);
   resize();
 
   function animate(now) {
@@ -1201,8 +1482,14 @@ function initHikerScene() {
       const sc = Math.min(1, window.scrollY / Math.max(1, canvas.clientHeight));
       const intro = Math.min(1, (now - startTime) / 2800);
       const ease = 1 - Math.pow(1 - intro, 3);
-      camera.position.x = 7.2 + Math.sin(t * 0.08) * 0.35 + pointer.x * 1.8 - sc * 2.5;
-      camera.position.y = 5.4 + Math.sin(t * 0.11) * 0.12 - pointer.y * 0.9 + sc * 1.5 + (1 - ease) * 2;
+      camera.position.x =
+        7.2 + Math.sin(t * 0.08) * 0.35 + pointer.x * 1.8 - sc * 2.5;
+      camera.position.y =
+        5.4 +
+        Math.sin(t * 0.11) * 0.12 -
+        pointer.y * 0.9 +
+        sc * 1.5 +
+        (1 - ease) * 2;
       camera.position.z = 15 - sc * 3 + (1 - ease) * 5;
       camera.lookAt(pointer.x * 0.6, 2.0, -5);
     } else {
@@ -1225,7 +1512,9 @@ initHikerScene();
    =================================================================== */
 (function motionLayer() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const finePointer = window.matchMedia(
+    "(hover: hover) and (pointer: fine)",
+  ).matches;
   document.documentElement.classList.add("js-motion");
 
   /* --- Scroll progress, header state, hero parallax --- */
@@ -1298,7 +1587,8 @@ initHikerScene();
           const frag = document.createDocumentFragment();
           n.textContent.split(/(\s+)/).forEach((part) => {
             if (!part) return;
-            if (/^\s+$/.test(part)) return frag.appendChild(document.createTextNode(" "));
+            if (/^\s+$/.test(part))
+              return frag.appendChild(document.createTextNode(" "));
             const w = document.createElement("span");
             w.className = "word";
             w.setAttribute("aria-hidden", "true");
@@ -1402,14 +1692,20 @@ initHikerScene();
       glare.setAttribute("aria-hidden", "true");
       el.appendChild(glare);
     }
-    if (el.querySelector("[data-reveal]") || el.parentElement?.closest("[data-reveal]")) return;
+    if (
+      el.querySelector("[data-reveal]") ||
+      el.parentElement?.closest("[data-reveal]")
+    )
+      return;
     if (kind === "up" && el.querySelector(".feature")) return;
     const parent = el.parentElement;
     const idx = counts.get(parent) || 0;
     counts.set(parent, idx + 1);
     el.style.setProperty("--d", Math.min(idx, 7) * 85 + "ms");
     el.setAttribute("data-reveal", kind);
-    el.querySelectorAll("polyline").forEach((pl) => pl.setAttribute("pathLength", "1"));
+    el.querySelectorAll("polyline").forEach((pl) =>
+      pl.setAttribute("pathLength", "1"),
+    );
     revealIO.observe(el);
   }
   function scan(node) {
@@ -1431,7 +1727,9 @@ initHikerScene();
     let active = null;
     const release = (el) => {
       el.classList.remove("tilting");
-      ["--rx", "--ry", "--tx", "--ty"].forEach((v) => el.style.removeProperty(v));
+      ["--rx", "--ry", "--tx", "--ty"].forEach((v) =>
+        el.style.removeProperty(v),
+      );
     };
     document.addEventListener("pointermove", (e) => {
       if (e.pointerType !== "mouse") return;
@@ -1461,8 +1759,14 @@ initHikerScene();
       const b = e.target.closest?.(".btn");
       if (!b) return;
       const r = b.getBoundingClientRect();
-      b.style.setProperty("--bx", ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + "px");
-      b.style.setProperty("--by", ((e.clientY - r.top - r.height / 2) * 0.28).toFixed(1) + "px");
+      b.style.setProperty(
+        "--bx",
+        ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + "px",
+      );
+      b.style.setProperty(
+        "--by",
+        ((e.clientY - r.top - r.height / 2) * 0.28).toFixed(1) + "px",
+      );
     });
     document.addEventListener(
       "pointerout",
@@ -1482,10 +1786,19 @@ initHikerScene();
     const a = e.target.closest?.("a[href]");
     if (!a || e.defaultPrevented || e.button !== 0) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if ((a.target && a.target !== "_self") || a.hasAttribute("download")) return;
+    if ((a.target && a.target !== "_self") || a.hasAttribute("download"))
+      return;
     const url = new URL(a.href, location.href);
-    if (!/^(https?|file):$/.test(url.protocol) || url.origin !== location.origin) return;
-    if (url.pathname === location.pathname && (url.hash || url.search === location.search)) return;
+    if (
+      !/^(https?|file):$/.test(url.protocol) ||
+      url.origin !== location.origin
+    )
+      return;
+    if (
+      url.pathname === location.pathname &&
+      (url.hash || url.search === location.search)
+    )
+      return;
     e.preventDefault();
     document.body.classList.add("page-leave");
     setTimeout(() => (location.href = a.href), 260);
@@ -1499,7 +1812,8 @@ initHikerScene();
    FLOATING ACTIONS (WhatsApp + back to top) and FOOTER SOCIAL ICONS
    Injected on every page, so no HTML changes are needed.
    =================================================================== */
-const STROKE = 'fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"';
+const STROKE =
+  'fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"';
 const ICONS = {
   whatsapp:
     '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>',
@@ -1534,30 +1848,44 @@ function initFloatingActions() {
     const y = window.scrollY,
       max = document.documentElement.scrollHeight - window.innerHeight;
     toTop.classList.toggle("show", y > Math.min(600, window.innerHeight * 0.8));
-    ring.style.strokeDashoffset = C * (1 - (max > 0 ? Math.min(1, y / max) : 0));
+    ring.style.strokeDashoffset =
+      C * (1 - (max > 0 ? Math.min(1, y / max) : 0));
   };
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
   window.addEventListener("resize", update);
   update();
 
-  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
+  toTop.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }),
+  );
 }
 
 function initFooterSocials() {
   const brand = $("footer .footer-grid > div:first-child");
   if (!brand || $(".socials", brand)) return;
-  const items = [["facebook", "Facebook"], ["instagram", "Instagram"], ["tiktok", "TikTok"]].filter(([k]) => SITE.social[k]);
+  const items = [
+    ["facebook", "Facebook"],
+    ["instagram", "Instagram"],
+    ["tiktok", "TikTok"],
+  ].filter(([k]) => SITE.social[k]);
   if (!items.length) return;
   const box = document.createElement("div");
   box.className = "socials";
   box.innerHTML = `<div class="footer-title">Follow us</div>
     <ul class="social-list">${items
-      .map(([k, name]) => `<li><a class="social-link social-${k}" href="${SITE.social[k]}" target="_blank" rel="noopener noreferrer" aria-label="Tagalong Hikers on ${name}" title="${name}">${ICONS[k]}</a></li>`)
+      .map(
+        ([k, name]) =>
+          `<li><a class="social-link social-${k}" href="${SITE.social[k]}" target="_blank" rel="noopener noreferrer" aria-label="Tagalong Hikers on ${name}" title="${name}">${ICONS[k]}</a></li>`,
+      )
       .join("")}</ul>`;
   brand.appendChild(box);
 }
