@@ -1,6 +1,17 @@
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
+/* ---------- SITE CONFIG: edit contact + social details here ---------- */
+const SITE = {
+  whatsapp: "254700000000", // international format, no + or spaces
+  whatsappMessage: "Hi Tagalong Hikers! I'd like to know more about your hikes.",
+  social: {
+    facebook: "https://www.facebook.com/tagalonghikers",
+    instagram: "https://www.instagram.com/tagalonghikers",
+    tiktok: "https://www.tiktok.com/@tagalonghikers",
+  },
+};
+
 const savedTheme = localStorage.getItem("tagalong-theme");
 if (savedTheme === "light") document.documentElement.dataset.theme = "light";
 
@@ -1483,3 +1494,73 @@ initHikerScene();
     if (e.persisted) document.body.classList.remove("page-leave");
   });
 })();
+
+/* ===================================================================
+   FLOATING ACTIONS (WhatsApp + back to top) and FOOTER SOCIAL ICONS
+   Injected on every page, so no HTML changes are needed.
+   =================================================================== */
+const STROKE = 'fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS = {
+  whatsapp:
+    '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>',
+  arrowUp: `<svg viewBox="0 0 24 24" ${STROKE} aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>`,
+  facebook: `<svg viewBox="0 0 24 24" ${STROKE} aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+  instagram: `<svg viewBox="0 0 24 24" ${STROKE} aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg>`,
+  tiktok: `<svg viewBox="0 0 24 24" ${STROKE} aria-hidden="true"><path d="M14 3v11a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.3 2.3 2 4 4.5 4.2"/></svg>`,
+};
+
+function initFloatingActions() {
+  if ($(".fab-stack")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stack = document.createElement("div");
+  stack.className = "fab-stack";
+  stack.innerHTML = `
+    <button type="button" class="to-top" aria-label="Back to top" title="Back to top">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21"/></svg>${ICONS.arrowUp}
+    </button>
+    <a class="wa-fab" href="https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+      ${ICONS.whatsapp}<span class="wa-label">Chat with us</span>
+    </a>`;
+  document.body.appendChild(stack);
+
+  const toTop = $(".to-top", stack),
+    ring = $(".ring circle", stack),
+    C = 2 * Math.PI * 21;
+  ring.style.strokeDasharray = C;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY,
+      max = document.documentElement.scrollHeight - window.innerHeight;
+    toTop.classList.toggle("show", y > Math.min(600, window.innerHeight * 0.8));
+    ring.style.strokeDashoffset = C * (1 - (max > 0 ? Math.min(1, y / max) : 0));
+  };
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+
+  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
+}
+
+function initFooterSocials() {
+  const brand = $("footer .footer-grid > div:first-child");
+  if (!brand || $(".socials", brand)) return;
+  const items = [["facebook", "Facebook"], ["instagram", "Instagram"], ["tiktok", "TikTok"]].filter(([k]) => SITE.social[k]);
+  if (!items.length) return;
+  const box = document.createElement("div");
+  box.className = "socials";
+  box.innerHTML = `<div class="footer-title">Follow us</div>
+    <ul class="social-list">${items
+      .map(([k, name]) => `<li><a class="social-link social-${k}" href="${SITE.social[k]}" target="_blank" rel="noopener noreferrer" aria-label="Tagalong Hikers on ${name}" title="${name}">${ICONS[k]}</a></li>`)
+      .join("")}</ul>`;
+  brand.appendChild(box);
+}
+
+initFloatingActions();
+initFooterSocials();
