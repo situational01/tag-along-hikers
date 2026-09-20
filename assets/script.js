@@ -362,42 +362,134 @@ function setupBooking() {
   });
 }
 
+/* ---------- Weather: Open-Meteo first, MET Norway as backup, saved copy as last resort ---------- */
+const WEATHER_CACHE_KEY = "tagalong-weather";
+const WMO_TEXT = {
+  0: "Clear", 1: "Mainly clear", 2: "Partly cloudy", 3: "Cloudy", 45: "Foggy", 48: "Foggy",
+  51: "Light drizzle", 53: "Drizzle", 55: "Drizzle", 56: "Freezing drizzle", 57: "Freezing drizzle",
+  61: "Light rain", 63: "Rain", 65: "Heavy rain", 66: "Freezing rain", 67: "Freezing rain",
+  80: "Showers", 81: "Showers", 82: "Heavy showers", 95: "Thunderstorm", 96: "Thunderstorm", 99: "Thunderstorm",
+};
+const nairobiToday = () => new Date(Date.now() + 3 * 3600 * 1000).toISOString().slice(0, 10); // UTC+3 all year
+
+async function fetchJSON(url, ms = 9000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function weatherFromOpenMeteo() {
+  const d = await fetchJSON(
+    "https://api.open-meteo.com/v1/forecast?latitude=-1.2921&longitude=36.8219&daily=weather_code,temperature_2m_max,precipitation_probability_max&timezone=Africa%2FNairobi&forecast_days=4",
+  );
+  if (!d?.daily?.time?.length) throw new Error(d?.reason || "Unexpected response");
+  return d.daily.time.map((date, i) => ({
+    date,
+    temp: Math.round(d.daily.temperature_2m_max[i]),
+    desc: WMO_TEXT[d.daily.weather_code?.[i]] || "Variable",
+    rain: `Rain chance ${d.daily.precipitation_probability_max?.[i] ?? 0}%`,
+  }));
+}
+
+function metSymbolText(code = "") {
+  const c = code.replace(/_(day|night|polartwilight)$/, "");
+  if (c.includes("thunder")) return "Thunderstorm";
+  if (c.includes("heavyrain")) return "Heavy rain";
+  if (c.includes("lightrain")) return "Light rain";
+  if (c.includes("showers")) return "Showers";
+  if (c.includes("rain")) return "Rain";
+  if (c.includes("drizzle")) return "Drizzle";
+  return { clearsky: "Clear", fair: "Mainly clear", partlycloudy: "Partly cloudy", cloudy: "Cloudy", fog: "Foggy" }[c] || "Variable";
+}
+
+async function weatherFromMet() {
+  const d = await fetchJSON("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=-1.2921&lon=36.8219");
+  const series = d?.properties?.timeseries;
+  if (!series?.length) throw new Error("Unexpected response");
+  const days = new Map();
+  series.forEach((pt) => {
+    const local = new Date(new Date(pt.time).getTime() + 3 * 3600 * 1000);
+    const key = local.toISOString().slice(0, 10);
+    const day = days.get(key) || { date: key, temps: [], mm: 0, symbol: "", dist: 99 };
+    const t = pt.data?.instant?.details?.air_temperature;
+    if (typeof t === "number") day.temps.push(t);
+    const n1 = pt.data?.next_1_hours,
+      n6 = pt.data?.next_6_hours;
+    const block = n1 || n6; // hourly steps early on, 6-hourly later: count each period once
+    day.mm += block?.details?.precipitation_amount || 0;
+    const dist = Math.abs(local.getUTCHours() - 12);
+    if (block?.summary?.symbol_code && dist < day.dist) {
+      day.symbol = block.summary.symbol_code;
+      day.dist = dist;
+    }
+    days.set(key, day);
+  });
+  const out = [...days.values()]
+    .filter((x) => x.temps.length && x.date >= nairobiToday())
+    .slice(0, 4)
+    .map((x) => ({
+      date: x.date,
+      temp: Math.round(Math.max(...x.temps)),
+      desc: metSymbolText(x.symbol),
+      rain: x.mm >= 0.1 ? `Rain ${x.mm.toFixed(1)} mm` : "Dry",
+    }));
+  if (!out.length) throw new Error("No usable days");
+  return out;
+}
+
+function renderWeather(wrap, days, note) {
+  wrap.innerHTML =
+    days
+      .map(
+        (x) =>
+          `<div class="weather-card"><div class="weather-day">${new Date(x.date + "T12:00:00").toLocaleDateString("en-KE", { weekday: "short", day: "numeric", month: "short" })}</div><div class="weather-temp">${x.temp}°</div><div class="weather-desc">${x.desc} · ${x.rain}</div></div>`,
+      )
+      .join("") + (note ? `<p class="weather-note">${note}</p>` : "");
+}
+
 async function loadWeather() {
   const wrap = $("#weather-cards");
   if (!wrap) return;
-  try {
-    const url =
-      "https://api.open-meteo.com/v1/forecast?latitude=-1.2921&longitude=36.8219&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Africa%2FNairobi&forecast_days=4";
-    const res = await fetch(url);
-    const d = await res.json();
-    const desc = (c) =>
-      ({
-        0: "Clear",
-        1: "Mainly clear",
-        2: "Partly cloudy",
-        3: "Cloudy",
-        45: "Foggy",
-        48: "Foggy",
-        51: "Light drizzle",
-        53: "Drizzle",
-        55: "Drizzle",
-        61: "Light rain",
-        63: "Rain",
-        65: "Heavy rain",
-        80: "Showers",
-        81: "Showers",
-        82: "Heavy showers",
-        95: "Thunderstorm",
-      })[c] || "Variable";
-    wrap.innerHTML = d.daily.time
-      .map(
-        (day, i) =>
-          `<div class="weather-card"><div class="weather-day">${new Date(day).toLocaleDateString("en-KE", { weekday: "short", day: "numeric", month: "short" })}</div><div class="weather-temp">${Math.round(d.daily.temperature_2m_max[i])}°</div><div class="weather-desc">${desc(d.current?.weather_code || 2)} · Rain chance ${d.daily.precipitation_probability_max[i] ?? 0}%</div></div>`,
-      )
-      .join("");
-  } catch (e) {
-    wrap.innerHTML = `<div class="empty">Weather data is temporarily unavailable. Check the forecast again before your hike.</div>`;
+  wrap.innerHTML = '<div class="empty">Loading forecast…</div>';
+
+  const providers = [
+    ["Open-Meteo", weatherFromOpenMeteo, 2],
+    ["MET Norway", weatherFromMet, 1],
+  ];
+  for (const [name, fn, tries] of providers) {
+    for (let i = 0; i < tries; i++) {
+      try {
+        const days = await fn();
+        try {
+          localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({ ts: Date.now(), name, days }));
+        } catch {}
+        renderWeather(wrap, days, `Forecast for Nairobi · data from ${name}`);
+        return;
+      } catch (e) {
+        console.warn(`[weather] ${name} failed (attempt ${i + 1}):`, e);
+      }
+    }
   }
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY) || "null");
+    const upcoming = saved?.days?.filter((x) => x.date >= nairobiToday()) || [];
+    if (upcoming.length && Date.now() - saved.ts < 24 * 3600 * 1000) {
+      const hrs = Math.max(1, Math.round((Date.now() - saved.ts) / 3600000));
+      renderWeather(wrap, upcoming, `Live forecast is unavailable, so this is your last saved forecast (${hrs}h old). Check again before your hike.`);
+      return;
+    }
+  } catch {}
+
+  wrap.innerHTML = `<div class="empty weather-error"><p>Weather data is temporarily unavailable. Check the forecast again before your hike.</p>
+    <div class="actions"><button type="button" class="btn fill" data-retry>Try again</button><a class="btn" href="https://meteo.go.ke/" target="_blank" rel="noopener">Kenya Met Department</a></div></div>`;
+  wrap.querySelector("[data-retry]")?.addEventListener("click", loadWeather);
 }
 
 renderFeatured();
@@ -1144,12 +1236,19 @@ initHikerScene();
       const max = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
       header?.classList.toggle("scrolled", y > 24);
-      if (hero) {
+      if (hero && window.innerWidth <= 900) {
+        /* small screens: the photo shows in full, so no parallax crop or fade */
+        if (heroScene) heroScene.style.transform = "";
+        if (heroContent) {
+          heroContent.style.transform = "";
+          heroContent.style.opacity = "";
+        }
+      } else if (hero) {
         const h = hero.offsetHeight;
         if (y < h * 1.1) {
           if (heroScene) {
-            const shift = Math.min(y * 0.15, h * 0.05);
-            heroScene.style.transform = `translate3d(0,${shift}px,0) scale(1.1)`;
+            const shift = Math.min(y * 0.12, h * 0.02);
+            heroScene.style.transform = `translate3d(0,${shift}px,0) scale(1.04)`;
           }
           if (heroContent) {
             heroContent.style.transform = `translate3d(0,${y * 0.22}px,0)`;
