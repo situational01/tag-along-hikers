@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="Tagalong Hikers — plan, hike and explore Kenya. Discover upcoming hikes, trail guides, registration and outdoor adventures."
+      content="Photos from past Tagalong Hikers adventures across Kenya. Browse each hike and view the photos full screen."
     />
     <meta name="theme-color" content="#070707" />
     <title>Gallery | Tagalong Hikers</title>
@@ -37,52 +37,93 @@
           <div class="eyebrow">From the trail</div>
           <h1>Adventure Gallery.</h1>
           <p>
-            Hike photos, landscapes and moments from past adventures. Replace
-            these sample photographs with your own Tagalong Hikers media.
+            Photos from our past hikes. Choose a hike, tap any photo to open it
+            full screen, then zoom in or swipe through the rest of the album.
           </p>
         </div>
       </section>
+
       <section class="section">
         <div class="container">
-          <div class="gallery">
-            <div class="gallery-item">
-              <img
-                src="images/hero_section/kim subday 2025-49.jpg"
-                alt="Hikers on a mountain trail"
-              />
-              <div class="gallery-caption">On the trail</div>
+          <!-- Filter buttons are created automatically once there are 2 or more albums -->
+          <div class="album-filter" id="album-filter"></div>
+
+          <!--
+            HOW TO ADD PHOTOS
+            1. To add photos to a hike, add one <a class="photo"> block inside its photo-grid.
+               href = the full-size image, src = the thumbnail (it can be the same file).
+            2. To add another hike, copy a whole <section class="album"> block and change:
+               the id (lowercase, no spaces), the hike name in <h2> and the date / place line.
+            The photo count, the hike filter buttons and the full-screen viewer
+            update by themselves.
+
+            TEMPLATE FOR A NEW HIKE (copy, remove this line, then fill in):
+
+            <section class="album" id="your-hike-id">
+              <header class="album-head">
+                <div>
+                  <h2>Hike name</h2>
+                  <p class="album-meta">Month 2025 · Location</p>
+                </div>
+                <span class="album-count"></span>
+              </header>
+              <div class="photo-grid">
+                <a class="photo" href="images/your-folder/photo-1.jpg"
+                  ><img src="images/your-folder/photo-1.jpg" alt="Describe the photo" loading="lazy" decoding="async"
+                /></a>
+              </div>
+            </section>
+          -->
+
+          <section class="album" id="recent-hikes">
+            <header class="album-head">
+              <div>
+                <h2>Recent hikes</h2>
+                <p class="album-meta">2025 · Tagalong Hikers</p>
+              </div>
+              <span class="album-count"></span>
+            </header>
+            <div class="photo-grid">
+              <a class="photo" href="images/hero_section/kim subday 2025-49.jpg"
+                ><img
+                  src="images/hero_section/kim subday 2025-49.jpg"
+                  alt="Hikers on a mountain trail"
+                  loading="lazy"
+                  decoding="async"
+              /></a>
+              <a class="photo" href="images/hero_section/kim subday 2025-358.jpg"
+                ><img
+                  src="images/hero_section/kim subday 2025-358.jpg"
+                  alt="Mountain landscape"
+                  loading="lazy"
+                  decoding="async"
+              /></a>
+              <a class="photo" href="images/hero_section/kim subday 2025-347.jpg"
+                ><img
+                  src="images/hero_section/kim subday 2025-347.jpg"
+                  alt="Forest trail"
+                  loading="lazy"
+                  decoding="async"
+              /></a>
+              <a class="photo" href="images/hero_section/kim subday 2025-436.jpg"
+                ><img
+                  src="images/hero_section/kim subday 2025-436.jpg"
+                  alt="Waterfall"
+                  loading="lazy"
+                  decoding="async"
+              /></a>
+              <a class="photo" href="images/hero_section/kim subday 2025-350.jpg"
+                ><img
+                  src="images/hero_section/kim subday 2025-350.jpg"
+                  alt="Mountain ridge"
+                  loading="lazy"
+                  decoding="async"
+              /></a>
             </div>
-            <div class="gallery-item">
-              <img
-                src="images/hero_section/kim subday 2025-358.jpg"
-                alt="Mountain landscape"
-              />
-              <div class="gallery-caption">Mountain views</div>
-            </div>
-            <div class="gallery-item">
-              <img
-                src="images/hero_section/kim subday 2025-347.jpg"
-                alt="Forest trail"
-              />
-              <div class="gallery-caption">Forest paths</div>
-            </div>
-            <div class="gallery-item">
-              <img
-                src="images/hero_section/kim subday 2025-436.jpg"
-                alt="Waterfall"
-              />
-              <div class="gallery-caption"></div>
-            </div>
-            <div class="gallery-item">
-              <img
-                src="images/hero_section/kim subday 2025-350.jpg"
-                alt="Mountain ridge"
-              />
-              <div class="gallery-caption">Summit days</div>
-            </div>
-          </div>
+          </section>
         </div>
       </section>
+
       <section class="section">
         <div class="container">
           <div class="section-head">
@@ -138,7 +179,7 @@
         <div class="footer-grid">
           <div>
             <div class="footer-brand">TAGALONG <em>HIKERS</em></div>
-            <p>Plan. Save. Explore</p>
+            <p>Plan. Hike. Explore.</p>
             <p>
               Outdoor experiences, organised hikes and useful trail information
               for people exploring Kenya.
