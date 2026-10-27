@@ -100,7 +100,7 @@ button {
   letter-spacing: 0.13em;
 }
 .nav-links a {
-  color: var(--muted);
+  color: white;
 }
 .nav-links a:hover,
 .nav-links a.active {
@@ -3168,44 +3168,322 @@ html.lb-open {
 }
 
 /* Hike-specific albums */
-.gallery-topline,.gallery-detail-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:30px}
-.gallery-topline h2{margin:5px 0}.gallery-search{background:var(--black-2);border:1px solid var(--line);color:var(--cream);padding:15px 18px;width:min(320px,100%);font:inherit}
-.hike-album-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.hike-album-card{min-width:0;text-align:left;padding:0;background:var(--black-2);color:var(--cream);border:1px solid var(--line);cursor:pointer;overflow:hidden}.hike-album-card:hover{border-color:var(--gold)}.hike-album-cover{height:250px;background:var(--black-3);overflow:hidden}.hike-album-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.hike-album-card:hover img{transform:scale(1.06)}.hike-empty-cover{height:100%;display:grid;place-items:center;color:var(--gold);letter-spacing:.12em;font-size:12px;background:radial-gradient(circle at 40% 20%,var(--black-3),var(--black-2))}.hike-album-info{padding:22px}.hike-album-info h3{font-size:23px;margin:8px 0 20px}.hike-album-bottom{border-top:1px solid var(--line);padding-top:15px;display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}.hike-album-bottom span:last-child{color:var(--gold)}
-.gallery-back{margin-bottom:32px}.gallery-detail-heading h2{font-size:clamp(28px,4vw,48px);margin:5px 0}.gallery-detail-heading p{margin:8px 0}.hike-photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.hike-photo{position:relative;padding:0;border:1px solid var(--line);height:260px;cursor:zoom-in;overflow:hidden;background:var(--black-3);color:white;text-align:left}.hike-photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s}.hike-photo:hover img{transform:scale(1.045)}.hike-photo span{position:absolute;left:0;right:0;bottom:0;padding:35px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.75));font-size:13px}.gallery-empty{border:1px dashed var(--line);padding:50px;color:var(--muted);grid-column:1/-1;text-align:center}
-.gallery-viewer[hidden],.gallery-detail[hidden],.gallery-topline[hidden],.hike-album-cards[hidden]{display:none!important}.gallery-viewer{position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,.96);display:flex;justify-content:center;align-items:center;color:white}.gallery-viewer figure{margin:0;max-width:calc(100% - 145px);width:100%;display:flex;align-items:center;justify-content:center;flex-direction:column}.gallery-viewer figure img{max-height:80vh;max-width:100%;object-fit:contain}.gallery-viewer figcaption{text-align:center;margin-top:10px;font-size:13px;color:#ddd}.gallery-viewer button{position:absolute;background:#242424;border:1px solid #777;color:white;cursor:pointer;font-size:30px;width:48px;height:48px}.gallery-viewer-close{top:22px;right:25px}.gallery-viewer-prev{left:20px}.gallery-viewer-next{right:20px}
-@media(max-width:850px){.hike-album-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hike-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:540px){.gallery-topline,.gallery-detail-heading{display:block}.gallery-search{margin-top:18px;width:100%}.hike-album-cards{grid-template-columns:1fr}.hike-photo-grid{grid-template-columns:1fr 1fr;gap:8px}.hike-photo{height:175px}.gallery-viewer figure{max-width:calc(100% - 90px)}.gallery-viewer button{width:36px;height:40px}.gallery-viewer-prev{left:3px}.gallery-viewer-next{right:3px}}
+.gallery-topline,
+.gallery-detail-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+.gallery-topline h2 {
+  margin: 5px 0;
+}
+.gallery-search {
+  background: var(--black-2);
+  border: 1px solid var(--line);
+  color: var(--cream);
+  padding: 15px 18px;
+  width: min(320px, 100%);
+  font: inherit;
+}
+.hike-album-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.hike-album-card {
+  min-width: 0;
+  text-align: left;
+  padding: 0;
+  background: var(--black-2);
+  color: var(--cream);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  overflow: hidden;
+}
+.hike-album-card:hover {
+  border-color: var(--gold);
+}
+.hike-album-cover {
+  height: 250px;
+  background: var(--black-3);
+  overflow: hidden;
+}
+.hike-album-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.hike-album-card:hover img {
+  transform: scale(1.06);
+}
+.hike-empty-cover {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  background: radial-gradient(
+    circle at 40% 20%,
+    var(--black-3),
+    var(--black-2)
+  );
+}
+.hike-album-info {
+  padding: 22px;
+}
+.hike-album-info h3 {
+  font-size: 23px;
+  margin: 8px 0 20px;
+}
+.hike-album-bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.hike-album-bottom span:last-child {
+  color: var(--gold);
+}
+.gallery-back {
+  margin-bottom: 32px;
+}
+.gallery-detail-heading h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  margin: 5px 0;
+}
+.gallery-detail-heading p {
+  margin: 8px 0;
+}
+.hike-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.hike-photo {
+  position: relative;
+  padding: 0;
+  border: 1px solid var(--line);
+  height: 260px;
+  cursor: zoom-in;
+  overflow: hidden;
+  background: var(--black-3);
+  color: white;
+  text-align: left;
+}
+.hike-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.hike-photo:hover img {
+  transform: scale(1.045);
+}
+.hike-photo span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 35px 14px 12px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  font-size: 13px;
+}
+.gallery-empty {
+  border: 1px dashed var(--line);
+  padding: 50px;
+  color: var(--muted);
+  grid-column: 1/-1;
+  text-align: center;
+}
+.gallery-viewer[hidden],
+.gallery-detail[hidden],
+.gallery-topline[hidden],
+.hike-album-cards[hidden] {
+  display: none !important;
+}
+.gallery-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(0, 0, 0, 0.96);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.gallery-viewer figure {
+  margin: 0;
+  max-width: calc(100% - 145px);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.gallery-viewer figure img {
+  max-height: 80vh;
+  max-width: 100%;
+  object-fit: contain;
+}
+.gallery-viewer figcaption {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #ddd;
+}
+.gallery-viewer button {
+  position: absolute;
+  background: #242424;
+  border: 1px solid #777;
+  color: white;
+  cursor: pointer;
+  font-size: 30px;
+  width: 48px;
+  height: 48px;
+}
+.gallery-viewer-close {
+  top: 22px;
+  right: 25px;
+}
+.gallery-viewer-prev {
+  left: 20px;
+}
+.gallery-viewer-next {
+  right: 20px;
+}
+@media (max-width: 850px) {
+  .hike-album-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .hike-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 540px) {
+  .gallery-topline,
+  .gallery-detail-heading {
+    display: block;
+  }
+  .gallery-search {
+    margin-top: 18px;
+    width: 100%;
+  }
+  .hike-album-cards {
+    grid-template-columns: 1fr;
+  }
+  .hike-photo-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hike-photo {
+    height: 175px;
+  }
+  .gallery-viewer figure {
+    max-width: calc(100% - 90px);
+  }
+  .gallery-viewer button {
+    width: 36px;
+    height: 40px;
+  }
+  .gallery-viewer-prev {
+    left: 3px;
+  }
+  .gallery-viewer-next {
+    right: 3px;
+  }
+}
 
 /* Gallery refinement: clear, button-like controls without directional arrows */
-.btn, .gallery-back, .hike-album-card, .hike-photo,
+.btn,
+.gallery-back,
+.hike-album-card,
+.hike-photo,
 .gallery-viewer button {
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
-  transition: background-color .18s ease, border-color .18s ease,
-    box-shadow .18s ease, transform .18s ease, color .18s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    color 0.18s ease;
 }
-.btn { min-height: 44px; padding: 12px 20px; font-size: 12px;
-  letter-spacing: .035em; text-transform: none; font-weight: 650;
-  transform: none !important; }
-.btn:hover, .gallery-back:hover { transform: translateY(-2px) !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,.22); }
-.btn:active, .gallery-back:active, .hike-album-card:active,
-.gallery-viewer button:active { transform: translateY(1px) !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,.18); }
-.btn:focus-visible, .gallery-back:focus-visible,
-.hike-album-card:focus-visible, .hike-photo:focus-visible,
-.gallery-viewer button:focus-visible { outline: 3px solid var(--gold-light);
-  outline-offset: 3px; }
-.hike-album-card:hover { transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0,0,0,.22); }
-.hike-album-bottom span:last-child { border: 1px solid var(--gold);
-  padding: 5px 10px; border-radius: 5px; font-weight: 700; }
-.gallery-viewer button { width: auto; min-width: 72px; height: 44px;
-  padding: 0 12px; font-size: 13px; font-weight: 650;
-  background: #252525; }
-.gallery-viewer-close { min-width: 72px; }
-.gallery-viewer button:hover { background: #47413a; border-color: var(--gold); }
-@media(max-width:540px){.gallery-viewer button{width:auto;min-width:58px;
-  height:40px;padding:0 7px;font-size:11px}}
-@media(prefers-reduced-motion:reduce){.btn,.hike-album-card,.gallery-viewer button{
-  transition:none!important;transform:none!important}}
+.btn {
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: 12px;
+  letter-spacing: 0.035em;
+  text-transform: none;
+  font-weight: 650;
+  transform: none !important;
+}
+.btn:hover,
+.gallery-back:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+}
+.btn:active,
+.gallery-back:active,
+.hike-album-card:active,
+.gallery-viewer button:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+.btn:focus-visible,
+.gallery-back:focus-visible,
+.hike-album-card:focus-visible,
+.hike-photo:focus-visible,
+.gallery-viewer button:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 3px;
+}
+.hike-album-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+.hike-album-bottom span:last-child {
+  border: 1px solid var(--gold);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+.gallery-viewer button {
+  width: auto;
+  min-width: 72px;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 650;
+  background: #252525;
+}
+.gallery-viewer-close {
+  min-width: 72px;
+}
+.gallery-viewer button:hover {
+  background: #47413a;
+  border-color: var(--gold);
+}
+@media (max-width: 540px) {
+  .gallery-viewer button {
+    width: auto;
+    min-width: 58px;
+    height: 40px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .hike-album-card,
+  .gallery-viewer button {
+    transition: none !important;
+    transform: none !important;
+  }
+}
