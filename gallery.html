@@ -42,92 +42,28 @@
           <div class="eyebrow">From the trail</div>
           <h1>Adventure Gallery.</h1>
           <p>
-            Photos from our past hikes. Choose a hike, tap any photo to open it
-            full screen, then zoom in or swipe through the rest of the album.
+            Explore photos organised by hike. Select an adventure like Karura Forest to see its own photo collection.
           </p>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section gallery-section">
         <div class="container">
-          <!-- Filter buttons are created automatically once there are 2 or more albums -->
-          <div class="album-filter" id="album-filter"></div>
-
-          <!--
-            HOW TO ADD PHOTOS
-            1. To add photos to a hike, add one <a class="photo"> block inside its photo-grid.
-               href = the full-size image, src = the thumbnail (it can be the same file).
-            2. To add another hike, copy a whole <section class="album"> block and change:
-               the id (lowercase, no spaces), the hike name in <h2> and the date / place line.
-            The photo count, the hike filter buttons and the full-screen viewer
-            update by themselves.
-
-            TEMPLATE FOR A NEW HIKE (copy, remove this line, then fill in):
-
-            <section class="album" id="your-hike-id">
-              <header class="album-head">
-                <div>
-                  <h2>Hike name</h2>
-                  <p class="album-meta">Month 2025 · Location</p>
-                </div>
-                <span class="album-count"></span>
-              </header>
-              <div class="photo-grid">
-                <a class="photo" href="images/your-folder/photo-1.jpg"
-                  ><img src="images/your-folder/photo-1.jpg" alt="Describe the photo" loading="lazy" decoding="async"
-                /></a>
-              </div>
-            </section>
-          -->
-
-          <section class="album" id="recent-hikes">
-            <header class="album-head">
-              <div>
-                <h2>Recent hikes</h2>
-                <p class="album-meta">2025 · Tagalong Hikers</p>
-              </div>
-              <span class="album-count"></span>
-            </header>
-            <div class="photo-grid">
-              <a class="photo" href="images/hero_section/kim subday 2025-49.jpg"
-                ><img
-                  src="images/hero_section/kim subday 2025-49.jpg"
-                  alt="Hikers on a mountain trail"
-                  loading="lazy"
-                  decoding="async"
-              /></a>
-              <a class="photo" href="images/hero_section/kim subday 2025-358.jpg"
-                ><img
-                  src="images/hero_section/kim subday 2025-358.jpg"
-                  alt="Mountain landscape"
-                  loading="lazy"
-                  decoding="async"
-              /></a>
-              <a class="photo" href="images/hero_section/kim subday 2025-347.jpg"
-                ><img
-                  src="images/hero_section/kim subday 2025-347.jpg"
-                  alt="Forest trail"
-                  loading="lazy"
-                  decoding="async"
-              /></a>
-              <a class="photo" href="images/hero_section/kim subday 2025-436.jpg"
-                ><img
-                  src="images/hero_section/kim subday 2025-436.jpg"
-                  alt="Waterfall"
-                  loading="lazy"
-                  decoding="async"
-              /></a>
-              <a class="photo" href="images/hero_section/kim subday 2025-350.jpg"
-                ><img
-                  src="images/hero_section/kim subday 2025-350.jpg"
-                  alt="Mountain ridge"
-                  loading="lazy"
-                  decoding="async"
-              /></a>
-            </div>
+          <div class="gallery-topline"><div><div class="eyebrow">Explore by destination</div><h2>Our hiking albums</h2></div><input id="gallery-search" class="gallery-search" type="search" placeholder="Search hikes..." aria-label="Search hike albums"></div>
+          <div id="gallery-albums" class="hike-album-cards" aria-live="polite"></div>
+          <section id="gallery-detail" class="gallery-detail" hidden>
+            <button class="btn gallery-back" id="gallery-back" type="button">All hiking albums</button>
+            <div class="gallery-detail-heading"><div><div class="eyebrow">Hike photo collection</div><h2 id="gallery-title"></h2><p id="gallery-description"></p><p id="gallery-meta" class="album-meta"></p></div><span id="gallery-count" class="album-count"></span></div>
+            <div id="gallery-photos" class="hike-photo-grid"></div>
           </section>
         </div>
       </section>
+      <div class="gallery-viewer" id="gallery-viewer" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <button type="button" class="gallery-viewer-close" id="gallery-close" aria-label="Close photo">Close</button>
+        <button type="button" class="gallery-viewer-prev" id="gallery-prev" aria-label="Previous photo">Previous</button>
+        <figure><img id="gallery-large" alt=""><figcaption id="gallery-caption"></figcaption></figure>
+        <button type="button" class="gallery-viewer-next" id="gallery-next" aria-label="Next photo">Next</button>
+      </div>
 
       <section class="section">
         <div class="container">
@@ -215,5 +151,7 @@
       </div>
     </footer>
     <script src="assets/script.js"></script>
+    <script src="assets/gallery-data.js"></script>
+    <script src="assets/gallery.js"></script>
   </body>
 </html>

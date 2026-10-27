@@ -82,30 +82,33 @@ if (year) year.textContent = new Date().getFullYear();
 
 const hikeData = [
   {
-    id: "ngong-hills",
-    name: "Ngong Hills",
-    location: "Ngong, Kajiado County",
-    date: "Saturday, 26 September 2026",
-    distance: "10 km",
-    elevation: "650 m gain",
+    id: "kereita-Forest",
+    name: "Kereita Forest",
+    location: "	Kimende, Lari, Kiambu County",
+    date: "To Be Announced",
+    distance: "Approximately 12–14 km (long waterfall route)",
+    elevation: "Approximately 2,300–2,650 m above sea level",
     difficulty: "Moderate",
-    duration: "4–5 hours",
-    meeting: "Ngong Town",
-    price: "KSh 10,000",
-    category: ["moderate", "mountains", "scenic"],
-    image: "images/upcoming_hikes/ngong_hills.jpg",
+    duration: "	Approximately 4–6 hours",
+    meeting: "Jogoo Road",
+    price: "To Be Announced",
+    category: ["moderate", "forest", "scenic"],
+    image: "images/upcoming_hikes/kereita-forest.jfif",
     description:
       "A classic ridgeline day with open views and a steady climb. Suitable for hikers with a reasonable level of walking experience.",
     bring: [
       "2 litres of water",
       "Comfortable hiking shoes",
-      "Light rain jacket",
+      "Waterproof jacket and warm clothing",
       "Snacks or packed lunch",
+      "Personal identification",
       "Sun protection",
     ],
-    included: ["Trail coordination", "Group guide", "Basic route briefing"],
+    included: [
+      "To be confirmed by Tag Along Hikers. Possible inclusions are guided hiking, forest entry fees, ranger services and return transport, depending on the package.",
+    ],
     safety:
-      "The route can become slippery in wet weather. Stay with the group, follow the guide and carry enough water.",
+      "Kereita's trails include muddy sections, steep valley descents and potentially slippery paths near the waterfall. Wear appropriate footwear, stay with your guide and avoid wandering off marked routes. Weather conditions can change quickly.",
     route: [
       [-1.406, 36.663],
       [-1.4, 36.675],
@@ -113,102 +116,102 @@ const hikeData = [
       [-1.383, 36.694],
     ],
   },
-  {
-    id: "karura",
-    name: "Karura Forest",
-    location: "Nairobi",
-    date: "Sunday, 27 September 2026",
-    distance: "7 km",
-    elevation: "120 m gain",
-    difficulty: "Easy",
-    duration: "2–3 hours",
-    meeting: "Karura Forest Gate",
-    price: "KSh 700",
-    category: ["easy", "forests", "scenic"],
-    image: "images/upcoming_hikes/karura_forest.jpg",
-    description:
-      "A relaxed forest adventure with shaded trails and plenty of room to enjoy a slower pace.",
-    bring: [
-      "1.5 litres of water",
-      "Walking shoes",
-      "Light jacket",
-      "Snacks",
-      "Sun protection",
-    ],
-    included: ["Trail coordination", "Group guide", "Route briefing"],
-    safety:
-      "Stay on designated trails and remain aware of cyclists and other trail users.",
-    route: [
-      [-1.25, 36.829],
-      [-1.246, 36.837],
-      [-1.237, 36.842],
-      [-1.23, 36.835],
-    ],
-  },
-  {
-    id: "longonot",
-    name: "Mt. Longonot",
-    location: "Naivasha, Nakuru County",
-    date: "Saturday, 3 October 2026",
-    distance: "9 km",
-    elevation: "630 m gain",
-    difficulty: "Difficult",
-    duration: "4–6 hours",
-    meeting: "Mt. Longonot Gate",
-    price: "KSh 1,500",
-    category: ["difficult", "mountains", "scenic"],
-    image: "images/upcoming_hikes/mt_longonot.jpg",
-    description:
-      "A demanding climb with a crater-rim section and wide Rift Valley views. Best for hikers comfortable with sustained uphill walking.",
-    bring: [
-      "2–3 litres of water",
-      "Proper hiking shoes",
-      "Rain protection",
-      "Food and snacks",
-      "Sun protection",
-    ],
-    included: ["Trail coordination", "Group guide", "Safety briefing"],
-    safety:
-      "This is a strenuous route. Pace yourself, communicate with the guide and turn back if conditions or your wellbeing make continuing unsafe.",
-    route: [
-      [-0.994, 36.469],
-      [-0.987, 36.475],
-      [-0.978, 36.482],
-      [-0.97, 36.49],
-    ],
-  },
-  {
-    id: "waterfall",
-    name: "Paradise Lost",
-    location: "Kiambu County",
-    date: "Sunday, 11 October 2026",
-    distance: "6 km",
-    elevation: "180 m gain",
-    difficulty: "Moderate",
-    duration: "3–4 hours",
-    meeting: "KencomCBD",
-    price: "KSh 900",
-    category: ["moderate", "waterfalls", "scenic"],
-    image: "images/upcoming_hikes/paradise_lost.jpg",
-    description:
-      "A scenic route through green terrain ending at a waterfall. Expect uneven ground and some wet sections.",
-    bring: [
-      "2 litres of water",
-      "Shoes with good grip",
-      "Light jacket",
-      "Snacks",
-      "Change of socks",
-    ],
-    included: ["Trail coordination", "Group guide", "Route briefing"],
-    safety:
-      "Rocks around water can be slippery. Follow marked access routes and do not climb on unstable edges.",
-    route: [
-      [-1.06, 36.72],
-      [-1.056, 36.728],
-      [-1.05, 36.735],
-      [-1.043, 36.741],
-    ],
-  },
+  // {
+  //   id: "karura",
+  //   name: "Karura Forest",
+  //   location: "Nairobi",
+  //   date: "Sunday, 27 September 2026",
+  //   distance: "7 km",
+  //   elevation: "120 m gain",
+  //   difficulty: "Easy",
+  //   duration: "2–3 hours",
+  //   meeting: "Karura Forest Gate",
+  //   price: "KSh 700",
+  //   category: ["easy", "forests", "scenic"],
+  //   image: "images/upcoming_hikes/karura_forest.jpg",
+  //   description:
+  //     "A relaxed forest adventure with shaded trails and plenty of room to enjoy a slower pace.",
+  //   bring: [
+  //     "1.5 litres of water",
+  //     "Walking shoes",
+  //     "Light jacket",
+  //     "Snacks",
+  //     "Sun protection",
+  //   ],
+  //   included: ["Trail coordination", "Group guide", "Route briefing"],
+  //   safety:
+  //     "Stay on designated trails and remain aware of cyclists and other trail users.",
+  //   route: [
+  //     [-1.25, 36.829],
+  //     [-1.246, 36.837],
+  //     [-1.237, 36.842],
+  //     [-1.23, 36.835],
+  //   ],
+  // },
+  // {
+  //   id: "longonot",
+  //   name: "Mt. Longonot",
+  //   location: "Naivasha, Nakuru County",
+  //   date: "Saturday, 3 October 2026",
+  //   distance: "9 km",
+  //   elevation: "630 m gain",
+  //   difficulty: "Difficult",
+  //   duration: "4–6 hours",
+  //   meeting: "Mt. Longonot Gate",
+  //   price: "KSh 1,500",
+  //   category: ["difficult", "mountains", "scenic"],
+  //   image: "images/upcoming_hikes/mt_longonot.jpg",
+  //   description:
+  //     "A demanding climb with a crater-rim section and wide Rift Valley views. Best for hikers comfortable with sustained uphill walking.",
+  //   bring: [
+  //     "2–3 litres of water",
+  //     "Proper hiking shoes",
+  //     "Rain protection",
+  //     "Food and snacks",
+  //     "Sun protection",
+  //   ],
+  //   included: ["Trail coordination", "Group guide", "Safety briefing"],
+  //   safety:
+  //     "This is a strenuous route. Pace yourself, communicate with the guide and turn back if conditions or your wellbeing make continuing unsafe.",
+  //   route: [
+  //     [-0.994, 36.469],
+  //     [-0.987, 36.475],
+  //     [-0.978, 36.482],
+  //     [-0.97, 36.49],
+  //   ],
+  // },
+  // {
+  //   id: "waterfall",
+  //   name: "Paradise Lost",
+  //   location: "Kiambu County",
+  //   date: "Sunday, 11 October 2026",
+  //   distance: "6 km",
+  //   elevation: "180 m gain",
+  //   difficulty: "Moderate",
+  //   duration: "3–4 hours",
+  //   meeting: "KencomCBD",
+  //   price: "KSh 900",
+  //   category: ["moderate", "waterfalls", "scenic"],
+  //   image: "images/upcoming_hikes/paradise_lost.jpg",
+  //   description:
+  //     "A scenic route through green terrain ending at a waterfall. Expect uneven ground and some wet sections.",
+  //   bring: [
+  //     "2 litres of water",
+  //     "Shoes with good grip",
+  //     "Light jacket",
+  //     "Snacks",
+  //     "Change of socks",
+  //   ],
+  //   included: ["Trail coordination", "Group guide", "Route briefing"],
+  //   safety:
+  //     "Rocks around water can be slippery. Follow marked access routes and do not climb on unstable edges.",
+  //   route: [
+  //     [-1.06, 36.72],
+  //     [-1.056, 36.728],
+  //     [-1.05, 36.735],
+  //     [-1.043, 36.741],
+  //   ],
+  // },
 ];
 
 function renderFeatured() {
@@ -2009,8 +2012,8 @@ function initGallery() {
         </div>
       </div>
       <div class="lb-stage"><img class="lb-img is-loading" alt="" draggable="false" /><span class="lb-spinner" aria-hidden="true"></span></div>
-      <button type="button" class="lb-nav lb-prev" data-act="prev" aria-label="Previous photo" title="Previous (←)">${ICON.prev}</button>
-      <button type="button" class="lb-nav lb-next" data-act="next" aria-label="Next photo" title="Next (→)">${ICON.next}</button>
+      <button type="button" class="lb-nav lb-prev" data-act="prev" aria-label="Previous photo" title="Previous photo">Previous</button>
+      <button type="button" class="lb-nav lb-next" data-act="next" aria-label="Next photo" title="Next photo">Next</button>
       <div class="lb-thumbs" aria-label="Photos in this album"></div>`;
     document.body.appendChild(lb);
 
