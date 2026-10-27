@@ -100,7 +100,7 @@ button {
   letter-spacing: 0.13em;
 }
 .nav-links a {
-  color: white;
+  color: var(--muted);
 }
 .nav-links a:hover,
 .nav-links a.active {
