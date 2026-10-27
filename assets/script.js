@@ -84,7 +84,7 @@ const hikeData = [
   {
     id: "kereita-Forest",
     name: "Kereita Forest",
-    location: "	Kimende, Lari, Kiambu County",
+    location: "Kimende, Lari, Kiambu County",
     date: "To Be Announced",
     distance: "Approximately 12–14 km (long waterfall route)",
     elevation: "Approximately 2,300–2,650 m above sea level",
@@ -92,7 +92,7 @@ const hikeData = [
     duration: "	Approximately 4–6 hours",
     meeting: "Jogoo Road",
     price: "To Be Announced",
-    category: ["moderate", "forest", "scenic"],
+    category: ["moderate", "forests", "scenic", "waterfalls"],
     image: "images/upcoming_hikes/kereita-forest.jfif",
     description:
       "A classic ridgeline day with open views and a steady climb. Suitable for hikers with a reasonable level of walking experience.",
